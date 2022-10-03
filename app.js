@@ -11,7 +11,8 @@ var indexRouter = require('./routes/index');
 var statisticalRouter = require('./routes/statistical');
 var maps_binhduongRouter = require('./routes/maps_binhduong');
 var thaiton_warehousesRouter = require('./routes/thaiton_warehouses');
-var dashboardRouter = require('./routes/dashboard')
+var dashboardRouter = require('./routes/dashboard');
+var warehouseThaiTonCRouter = require('./routes/warehouseThaiTonC');
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -30,6 +31,7 @@ app.use('/statistical', statisticalRouter);
 app.use('/maps_binhduong', maps_binhduongRouter);
 app.use('/thaiton_warehouses', thaiton_warehousesRouter);
 app.use('/dashboard', dashboardRouter)
+app.use('/warehouseThaiTonC', warehouseThaiTonCRouter);
 
 app.use(function (req, res, next) {
     next(createError(404));
