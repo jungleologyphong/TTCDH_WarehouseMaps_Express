@@ -1,47 +1,29 @@
 var app = require("../app");
-var debug = require("debug")("ttcdh_warehousemaps_express");
+var debug = require("debug")("ttcdh_warehousemaps_express:server");
 var http = require("http");
 var socketio = require("socket.io");
-const db = require("../server/database/databaseConnect.js");
-db.connectToServer();
+const db = require("../server/database/databaseConnect");
+db.connect();
 
-function normalizePort(val) {
-  var port = parseInt(val, 10);
-
-  if (isNaN(port)) {
-    return val;
-  }
-
-  if (port >= 0) {
-    return port;
-  }
-
-  return false;
-}
-
-var port = normalizePort(process.env.PORT || "8080");
+var port = 8080;
 app.set("port", port);
-
+//Port
+console.log("Port : " + port);
+//Port
 var server = http.createServer(app);
 const io = socketio(server);
 
 //ConnectionSocket
 io.on("connection", (socket) => {
-  const Users = require("../server/models/User");
-  const Customer = require("../model/Student");
-  const MapsWarehouse = require("../model/Book");
+  const User = require("../server/models/User");
+
   console.log("A User Connection");
-  //JoinSever
-  socket.on("join", function (data) {
-    console.log("EventJoin: " + data);
-  });
-  //JoinSever
-  
+
   //SignIn
-  socket.on("login", async (email, password) => {
+  socket.on("login", (email, password) => {
     console.log("Event Login : " + email + " & Password : " + password);
 
-    const cursor = await users.findOne({ email: email }).exec();
+    const cursor = User.findOne({ email: email }).exec();
     console.log(cursor);
     try {
       if (cursor != null) {
@@ -54,7 +36,7 @@ io.on("connection", (socket) => {
       } else {
         socket.emit("login", false);
         console.log("Data Null");
-      }
+      }e
     } catch (err) {
       console.log("Data Null");
     }
@@ -73,7 +55,7 @@ io.on("connection", (socket) => {
         " : Register"
     );
     var user = { name: name, email: email, password: password };
-    users.create(user, function (err, result) {
+    User.create(user, function (err, result) {
       if (err) {
         console.log(err);
         socket.emit("register", false);
@@ -211,36 +193,45 @@ io.on("connection", (socket) => {
     });
   });
   //Get Students
-  server.listen(port);
-  server.on("error", onError);
-  server.on("listening", onListening);
-
-  
-
-  function onError(error) {
-    if (error.syscall !== "listen") {
-      throw error;
-    }
-
-    var bind = typeof port === "string" ? "Pipe " + port : "Port " + port;
-
-    switch (error.code) {
-      case "EACCES":
-        console.error(bind + " requires elevated privileges");
-        process.exit(1);
-        break;
-      case "EADDRINUSE":
-        console.error(bind + " is already in use");
-        process.exit(1);
-        break;
-      default:
-        throw error;
-    }
-  }
-
-  function onListening() {
-    var addr = server.address();
-    var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
-    debug("Listening on " + bind);
-  }
 });
+
+function onError(error) {
+  if (error.syscall !== "listen") {
+    throw error;
+  }
+
+  var bind = typeof port === "string" ? "Pipe " + port : "Port " + port;
+
+  switch (error.code) {
+    case "EACCES":
+      console.error(bind + " requires elevated privileges");
+      process.exit(1);
+      break;
+    case "EADDRINUSE":
+      console.error(bind + " is already in use");
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+  if (isNaN(port)) {
+    return val;
+  }
+  if (port >= 0) {
+    return port;
+  }
+  return false;
+}
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
+  debug("Listening on " + bind);
+}
+
+server.listen(port);
+server.on("error", onError);
+server.on("listening", onListening);

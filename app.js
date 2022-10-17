@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 const db = require("./server/database/databaseConnect");
-db.connectToServer();
+db.connect();
 
 var indexRouter = require('./routes/index');
 var statisticalRouter = require('./routes/statistical');
@@ -15,7 +15,6 @@ var dashboardRouter = require('./routes/dashboard');
 var warehouseThaiTonCRouter = require('./routes/warehouseThaiTonC');
 
 const app = express();
-const port = process.env.PORT || 8080;
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -42,16 +41,6 @@ app.use(function (err, req, res, next) {
     res.locals.error = req.app.get('env') === 'development' ? err : {};
     res.status(err.status || 500);
     res.render('error');
-});
-
-app.get('/', (req, res) => {
-  res.status(200).json({
-    message: 'Welcome to Project with Nodejs Express and MongoDB',
-  });
-});
-
-app.listen(port, () => {
-  console.log(`Our server is running on port ${port}`);
 });
 
 module.exports = app;
