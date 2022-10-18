@@ -36,7 +36,7 @@
   <!-- AngularJs -->
 </head>
 
-<body ng-app="myapp" ng-controller="myctrl"> 
+<body> 
   <!-- ? Preloader Start -->
   <div class="main" >
     <div>
@@ -63,16 +63,16 @@
               <h2>ĐĂNG NHẬP</h2>
               <div class="form-input">
                 <label for="email">Email</label>
-                <input id="email" ng-model="user.email" type="email" name="email"
+                <input id="email" type="email" name="email"
                   placeholder="example@ttcdanghuynh.vn" />
               </div>
               <div class="form-input">
                 <label for="name">Password</label>
-                <input id="password" ng-model="user.password" type="password" name="password"
+                <input id="password" type="password" name="password"
                   placeholder="Vui lòng nhập mật khẩu ..." />
               </div>
               <div>
-                <button type="button" class="btn btn-info mt-5 text-center" ng-click="login()">ĐĂNG NHẬP</button>
+                <button type="button" class="btn btn-info mt-5 text-center">ĐĂNG NHẬP</button>
               </div>
             </div>
             <div id="exampleModal" style="display: none;" class="login-form" function>
@@ -81,8 +81,7 @@
                   <div class="modal-body">
                     <form>
                       <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                          ng-click="closeModal()">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
@@ -133,47 +132,5 @@
   <!-- Jquery Plugins, main Jquery -->
   <script src="/assetsLogin/js/plugins.js"></script>
   <script src="/assetsLogin/js/main.js"></script>
-  <script>
-    var app = angular.module("myapp", []);
-    app.controller("myctrl", function ($scope) {
-      $scope.user = {
-        email: "",
-        password: "",
-      };
-      //Function Login
-      $scope.login = function () {
-        var socket = io.connect('http://localhost:8080');
-        console.log("Connect Socket.io Successfully");
-        console.log("Email: " + $scope.user.email + " / " + "Password: " + $scope.user.password);
-        var email = $scope.user.email;
-        var password = $scope.user.password;
-        if (email == "" || password == "") {
-          document.getElementById("exampleModal").style.display = "block";
-          if (email == "") {
-            document.getElementById("modalValidation").innerHTML = "Vui lòng nhập Email";
-          } else if (password == "") {
-            document.getElementById("modalValidation").innerHTML = "Vui lòng nhập Mật khẩu";
-          }
-        } else {
-          socket.on("connection", function (data) {
-            socket.emit("login", {email: email}, {password:password});
-
-            socket.on("login", function (data) {
-              if (data == true) {
-                window.location = 'http://localhost:8080/dashboard';
-                alert("Login Succesfully");
-              } else {
-                alert("Login Failed");
-              }
-            });
-          });
-        }
-      };
-      $scope.closeModal = () => {
-        document.getElementById("exampleModal").style.display = "none";
-      }
-    });
-  </script>
 </body>
-
 </html>

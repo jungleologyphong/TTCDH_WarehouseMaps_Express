@@ -3,10 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
-const db = require("./server/database/databaseConnect");
-db.connect();
-
+//Routes
 var indexRouter = require('./routes/index');
 var statisticalRouter = require('./routes/statistical');
 var maps_binhduongRouter = require('./routes/maps_binhduong');

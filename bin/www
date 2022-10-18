@@ -1,198 +1,51 @@
-var app = require("../app");
-var debug = require("debug")("ttcdh_warehousemaps_express:server");
+const express = require("express");
+var appWeb = require("../app");
+const app = express();
+var debug = require("debug")("ttcdh_warehousemaps_express");
 var http = require("http");
-var socketio = require("socket.io");
-const db = require("../server/database/databaseConnect");
-db.connect();
+const cors = require("cors");
 
-var port = 8080;
-app.set("port", port);
-//Port
-console.log("Port : " + port);
-//Port
-var server = http.createServer(app);
-const io = socketio(server);
+var portWeb = 3000;
+appWeb.set("portWeb", portWeb);
+var server = http.createServer(appWeb);
 
-//ConnectionSocket
-io.on("connection", (socket) => {
-  const User = require("../server/models/User");
+var corsOptions = {
+  origin: "http://localhost:8081",
+};
 
-  console.log("A User Connection");
+app.use(cors(corsOptions));
 
-  //SignIn
-  socket.on("login", (email, password) => {
-    console.log("Event Login : " + email + " & Password : " + password);
+// parse requests of content-type - application/json
+app.use(express.json());
 
-    const cursor = User.findOne({ email: email }).exec();
-    console.log(cursor);
-    try {
-      if (cursor != null) {
-        if (cursor.password === password) {
-          socket.emit("login", true);
-          console.log("Login: Login Successfully");
-        } else {
-          socket.emit("login", false);
-        }
-      } else {
-        socket.emit("login", false);
-        console.log("Data Null");
-      }e
-    } catch (err) {
-      console.log("Data Null");
-    }
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
+
+const db = require("../server/models");
+db.mongoose
+  .connect(db.url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("Connected to the database!");
+  })
+  .catch((err) => {
+    console.log("Cannot connect to the database!", err);
+    process.exit();
   });
-  //SignIn
 
-  //SignUp
-  socket.on("register", function (name, email, password) {
-    console.log(
-      "Name : " +
-        name +
-        " - Email : " +
-        email +
-        " - Password : " +
-        password +
-        " : Register"
-    );
-    var user = { name: name, email: email, password: password };
-    User.create(user, function (err, result) {
-      if (err) {
-        console.log(err);
-        socket.emit("register", false);
-      } else {
-        console.log("RegisterUser : New User Successfully");
-        socket.emit("register", true);
-      }
-    });
-  });
-  //SignUp
+// simple route
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to TTC Dang Huynh application." });
+});
 
-  //Insert Students
-  socket.on(
-    "insertStudents",
-    function (nameStudent, codeStudent, careerStudent, dateOfBirthStudent) {
-      console.log(
-        "NameStudent : " +
-          nameStudent +
-          " - Code Student : " +
-          codeStudent +
-          " - Career : " +
-          careerStudent +
-          " - Date Of Birth Student : " +
-          dateOfBirthStudent
-      );
-      var student = {
-        nameStudent: nameStudent,
-        codeStudent: codeStudent,
-        careerStudent: careerStudent,
-        dateOfBirthStudent: dateOfBirthStudent,
-      };
-      students.create(student, function (err, result) {
-        if (err) {
-          console.log("Error InsertStudent: " + err);
-          socket.emit("insertStudents", false);
-        } else {
-          console.log("insertStudents : Insert Student Successfully");
-          socket.emit("insertStudents", true);
-        }
-      });
-    }
-  );
-  //Insert Students
+require("../server/routes/user.routes")(app);
 
-  //Insert Students
-  socket.on(
-    "insertBook",
-    function (idBook, nameBook, kindOfBook, mentor, fromBook) {
-      var book = {
-        idBook: idBook,
-        nameBook: nameBook,
-        kindOfBook: kindOfBook,
-        mentor: mentor,
-        fromBook: fromBook,
-      };
-      books.create(book, function (err, result) {
-        if (err) {
-          socket.emit("insertBook", false);
-        } else {
-          socket.emit("insertBook", true);
-        }
-      });
-    }
-  );
-  //Insert Students
-
-  //Delete Students
-  socket.on("deleteStudents", function (_id) {
-    console.log("_ID : " + _id);
-    students.findByIdAndRemove(_id, (error, deleteRecord) => {
-      if (error) {
-        console.log("Error DeleteStudent: " + error);
-        socket.emit("deleteStudents", false);
-      } else {
-        console.log("DeleteStudent : Delete Student Successfully");
-        socket.emit("insertStudents", true);
-      }
-    });
-  });
-  //Delete Students
-
-  //Update Students
-  socket.on(
-    "updateStudents",
-    function (
-      _id,
-      nameStudent,
-      codeStudent,
-      careerStudent,
-      dateOfBirthStudent
-    ) {
-      console.log(
-        "- Name Student : " +
-          nameStudent +
-          " - Code Student : " +
-          codeStudent +
-          " - Career Student : " +
-          careerStudent +
-          "Date Of Birth Student : " +
-          dateOfBirthStudent
-      );
-      students.findByIdAndUpdate(
-        _id,
-        {
-          nameStudent: nameStudent,
-          codeStudent: codeStudent,
-          careerStudent: careerStudent,
-          dateOfBirthStudent: dateOfBirthStudent,
-        },
-        (error, updateRecord) => {
-          if (error) {
-            console.log("Error Update Student : " + error);
-            socket.emit("updateStudents", false);
-          } else {
-            console.log("updateStudent : Update Student Successfully");
-            socket.emit("updateStudents", true);
-          }
-        }
-      );
-    }
-  );
-  //Update Students
-
-  //Get Students
-  socket.on("getAllStudents", function (message) {
-    console.log("Sever : GetStudents : " + message);
-    students.find({}).then((docs) => {
-      if (docs != null) {
-        io.sockets.emit("getAllStudents", docs);
-        console.log("Docs : " + docs);
-      } else {
-        console.log("----------------");
-        console.log("Full Data Done Get Students :" + docs);
-      }
-    });
-  });
-  //Get Students
+// set port, listen for requests
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
 });
 
 function onError(error) {
@@ -215,16 +68,6 @@ function onError(error) {
       throw error;
   }
 }
-function normalizePort(val) {
-  var port = parseInt(val, 10);
-  if (isNaN(port)) {
-    return val;
-  }
-  if (port >= 0) {
-    return port;
-  }
-  return false;
-}
 
 function onListening() {
   var addr = server.address();
@@ -232,6 +75,6 @@ function onListening() {
   debug("Listening on " + bind);
 }
 
-server.listen(port);
+server.listen(portWeb);
 server.on("error", onError);
 server.on("listening", onListening);
