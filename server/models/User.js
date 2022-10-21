@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const User = new mongoose.Schema({
+const User = Schema({
     fullname: {
         type: String,
         require: true,
@@ -24,6 +25,20 @@ const User = new mongoose.Schema({
     pathImage: {
         type: String,
         require: true,
+    },
+    logoutAt: {
+        type: Date,
+        require: true,
+        default: Date.now
+    },
+    logoutAt: {
+        type: Date,
+        require: true,
+        default: Date.now
+    },
+    typeUser: {
+        type: String,
+        default: "User"
     }
 });
 

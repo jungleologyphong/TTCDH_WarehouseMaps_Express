@@ -32,13 +32,12 @@
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>
-  <script src="/socket.io/socket.io.js"></script>
   <!-- AngularJs -->
 </head>
 
-<body> 
+<body>
   <!-- ? Preloader Start -->
-  <div class="main" >
+  <div class="main" ng-app="myapp" ng-controller="myctrl">
     <div>
       <div id="preloader-active">
         <div class="preloader d-flex align-items-center justify-content-center">
@@ -54,7 +53,7 @@
       <main class="login-body" data-vide-bg="/assetsLogin/img/login-bg.mp4">
         <!-- Login Admin -->
         <a href="/dashboard">
-          <form class="form-default" method="POST">
+          <form class="form-default" method="POST" action="/signin">
             <div class="login-form ">
               <!-- logo-login -->
               <div class="logo-login">
@@ -72,7 +71,7 @@
                   placeholder="Vui lòng nhập mật khẩu ..." />
               </div>
               <div>
-                <button type="button" class="btn btn-info mt-5 text-center">ĐĂNG NHẬP</button>
+                <button type="button" class="btn btn-info mt-5 text-center" ng-click="login()">ĐĂNG NHẬP</button>
               </div>
             </div>
             <div id="exampleModal" style="display: none;" class="login-form" function>
