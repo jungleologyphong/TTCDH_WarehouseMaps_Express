@@ -41,8 +41,6 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to TTC Dang Huynh application." });
 });
 
-require("../server/routes/user.routes")(app);
-
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
@@ -76,6 +74,6 @@ function onListening() {
   debug("Listening on " + bind);
 }
 
-server.listen(portWeb);
+server.listen(appWeb);
 server.on("error", onError);
 server.on("listening", onListening);

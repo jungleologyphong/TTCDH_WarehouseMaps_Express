@@ -4,12 +4,12 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 //Routes
-var indexRouter = require('./routes/index');
-var statisticalRouter = require('./routes/statistical');
-var maps_binhduongRouter = require('./routes/maps_binhduong');
-var thaiton_warehousesRouter = require('./routes/thaiton_warehouses');
-var dashboardRouter = require('./routes/dashboard');
-var warehouseThaiTonCRouter = require('./routes/warehouseThaiTonC');
+var indexRouter = require('./server/routes/index');
+var statisticalRouter = require('./server/routes/statistical');
+var maps_binhduongRouter = require('./server/routes/maps_binhduong');
+var thaiton_warehousesRouter = require('./server/routes/thaiton_warehouses');
+var dashboardRouter = require('./server/routes/dashboard');
+var warehouseThaiTonCRouter = require('./server/routes/warehouseThaiTonC');
 
 const app = express();
 

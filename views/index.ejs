@@ -53,7 +53,7 @@
       <main class="login-body" data-vide-bg="/assetsLogin/img/login-bg.mp4">
         <!-- Login Admin -->
         <a href="/dashboard">
-          <form class="form-default" method="POST" action="/signin">
+          <form class="form-default" method="post" action="/signin">
             <div class="login-form ">
               <!-- logo-login -->
               <div class="logo-login">
@@ -69,7 +69,7 @@
                 <input id="password" type="password" name="password" placeholder="Vui lòng nhập mật khẩu ..." />
               </div>
               <div>
-                <button type="button" class="btn btn-info mt-5 text-center" ng-click="login()">ĐĂNG NHẬP</button>
+                <button type="submit" class="btn btn-info mt-5 text-center">ĐĂNG NHẬP</button>
               </div>
             </div>
             <div id="exampleModal" style="display: none;" class="login-form" function>
@@ -116,7 +116,7 @@
   <script src="/assetsLogin/js/jquery.sticky.js"></script>
   <!-- Progress -->
   <script src="/assetsLogin/js/jquery.barfiller.js"></script>
-  <!-- Counter , waypoint,Hover Direction -->
+  <!-- Counter, Waypoint, Hover Direction -->
   <script src="/assetsLogin/js/jquery.counterup.min.js"></script>
   <script src="/assetsLogin/js/waypoints.min.js"></script>
   <script src="/assetsLogin/js/jquery.countdown.min.js"></script>
@@ -130,34 +130,26 @@
   <!-- Jquery Plugins, main Jquery -->
   <script src="/assetsLogin/js/plugins.js"></script>
   <script src="/assetsLogin/js/main.js"></script>
-  <script>
-    const getData = async (params, options) => {
+  <!-- <script>
+    const signin = async () => {
       let dataUser = []
 
       try {
-        const response = await axios.get(
-          `http://localhost:8080/api/users`,
-          { params },
-          {
-            ...options,
-            validateStatus: false
-          }
+        const response = await axios.post(
+          `http://localhost:8080/api/users/signin`,
+          { email:"nhatphong@gmail.com", password:"nhatphong@3105" },
         );
 
         if (response.status !== 200) {
           throw response.data;
         }
-        console.log(response.data);
-        dataUser.push(response.data);
-        console.log("Data User:"+dataUser.length);
+
         return response.data;
       } catch (error) {
         throw error || { message: 'Internal server error!' };
       }
     };
-
-    getData();
-  </script>
+  </script> -->
 </body>
 
 </html>
