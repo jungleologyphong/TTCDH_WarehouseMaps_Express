@@ -1,4 +1,4 @@
-const User = require("../models/User");
+const Users = require("../models/User");
 
 exports.create = (req, res) => {
   // Create a User
@@ -26,7 +26,7 @@ exports.create = (req, res) => {
 //http://localhost:8080/api/user
 exports.getAllUser = async (req, res) => {
   try {
-    const UserList = await User.find({});
+    const UserList = await Users.find({});
 
     return res.json(UserList);
   } catch (error) {
@@ -42,7 +42,7 @@ exports.findUserByID = async (req, res) => {
     if (!userID) {
       return res.status(404).json({ Message_API_FindOne: "ERROR_MISSING_PARAMS" })
     }
-    User.findById(userID).then(data => {
+    Users.findById(userID).then(data => {
       if (!data) {
         res.status(404).json({ Message_API_FindOne: "Not found User with ID: " + id })
       }
@@ -65,7 +65,7 @@ exports.signIn = async (req, res) => {
     if (!email || !password) {
       return res.status(404).json({ Message_API_SignIn: "ERROR_MISSING_PARAMS" });
     }
-    User.findOne({ email: email, password: email }).exec((error, doc) => {
+    Users.findOne({ email: email, password: email }).exec((error, doc) => {
       if (error) return res.status(404).json({ message: error.message });
 
       if (!doc) return res.status(404).json({ Message_API_SignIn: "ERROR_NOT_FOUND" });
@@ -87,7 +87,7 @@ exports.changePassword = async (req, res) => {
     if (!oldPassword || !newPassword || !rePassword || !id) {
       return res.status(404).json({ Message_API_ChangePassword: "ERROR_MISSING_PARAMS" });
     }
-    User.findById(id).then(data => {
+    Users.findById(id).then(data => {
       if (!data) {
         return res.status(404).json({ Message_API_ChangePassword: "NOT FOUND USER WITH ID: " + id })
       } else {
@@ -128,7 +128,7 @@ exports.changeInfomation = async (req, res) => {
       return res.status(404).json({ Message_API_ChangeInfomation: "ERROR_MISSING_PARAMS" });
     }
 
-    User.findByIdAndUpdate(id, {fullname: newFullname, telephoneNumber: newTelephoneNumber, companyUnit: newCompanyUnit}).then(data =>{
+    Users.findByIdAndUpdate(id, {fullname: newFullname, telephoneNumber: newTelephoneNumber, companyUnit: newCompanyUnit}).then(data =>{
       if (!data) {
         res.status(404).json({ Message_API_FindOne: "Not found User with ID: " + id })
       }

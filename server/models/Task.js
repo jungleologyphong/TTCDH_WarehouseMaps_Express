@@ -1,18 +1,18 @@
 const mongoose = require('mongoose');
 
-const MapsWarehouse = new mongoose.Schema({
-    nameWarehouse: {
+const Task = new mongoose.Schema({
+    titleTask: {
         type: String,
         require: true,
     },
-    companyUnit: {
+    statusTask: {
         type: String,
         require: true,
     },
-    pathImage: {
+    UserID: {
         type: String,
         require: true,
     }
 });
 
-module.exports = mongoose.model("MapsWarehouse", MapsWarehouse)
+module.exports = mongoose.model("Task", Task);

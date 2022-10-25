@@ -25,19 +25,19 @@
   <link rel="stylesheet" href="/assetsLogin/css/style.css" />
   <!-- CSS here -->
   <!-- AngularJs -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
     crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <!-- AngularJs -->
 </head>
 
 <body>
   <!-- ? Preloader Start -->
-  <div class="main" ng-app="myapp" ng-controller="myctrl">
+  <div class="main">
     <div>
       <div id="preloader-active">
         <div class="preloader d-flex align-items-center justify-content-center">
@@ -57,18 +57,16 @@
             <div class="login-form ">
               <!-- logo-login -->
               <div class="logo-login">
-                <a href="/dashboard"><img src="/assetsLogin/img/logo/logodh_mautrang_cokhung-1.png" alt="" /></a>
+                <a href="/dashboard"><img src="/assetsLogin/img/logo/logodh_mautrang_cokhung-1.png" alt=""/></a>
               </div>
               <h2>ĐĂNG NHẬP</h2>
               <div class="form-input">
                 <label for="email">Email</label>
-                <input id="email" type="email" name="email"
-                  placeholder="example@ttcdanghuynh.vn" />
+                <input id="email" type="email" name="email" placeholder="example@ttcdanghuynh.vn" />
               </div>
               <div class="form-input">
                 <label for="name">Password</label>
-                <input id="password" type="password" name="password"
-                  placeholder="Vui lòng nhập mật khẩu ..." />
+                <input id="password" type="password" name="password" placeholder="Vui lòng nhập mật khẩu ..." />
               </div>
               <div>
                 <button type="button" class="btn btn-info mt-5 text-center" ng-click="login()">ĐĂNG NHẬP</button>
@@ -94,6 +92,7 @@
       </main>
     </div>
   </div>
+  <!---->
   <script src="/assetsLogin/js/vendor/modernizr-3.5.0.min.js"></script>
   <!-- Jquery, Popper, Bootstrap -->
   <script src="/assetsLogin/js/vendor/jquery-1.12.4.min.js"></script>
@@ -117,12 +116,12 @@
   <script src="/assetsLogin/js/jquery.sticky.js"></script>
   <!-- Progress -->
   <script src="/assetsLogin/js/jquery.barfiller.js"></script>
-  <!-- counter , waypoint,Hover Direction -->
+  <!-- Counter , waypoint,Hover Direction -->
   <script src="/assetsLogin/js/jquery.counterup.min.js"></script>
   <script src="/assetsLogin/js/waypoints.min.js"></script>
   <script src="/assetsLogin/js/jquery.countdown.min.js"></script>
   <script src="/assetsLogin/js/hover-direction-snake.min.js"></script>
-  <!-- contact js -->
+  <!-- Contact js -->
   <script src="/assetsLogin/js/contact.js"></script>
   <script src="/assetsLogin/js/jquery.form.js"></script>
   <script src="/assetsLogin/js/jquery.validate.min.js"></script>
@@ -131,5 +130,34 @@
   <!-- Jquery Plugins, main Jquery -->
   <script src="/assetsLogin/js/plugins.js"></script>
   <script src="/assetsLogin/js/main.js"></script>
+  <script>
+    const getData = async (params, options) => {
+      let dataUser = []
+
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/api/users`,
+          { params },
+          {
+            ...options,
+            validateStatus: false
+          }
+        );
+
+        if (response.status !== 200) {
+          throw response.data;
+        }
+        console.log(response.data);
+        dataUser.push(response.data);
+        console.log("Data User:"+dataUser.length);
+        return response.data;
+      } catch (error) {
+        throw error || { message: 'Internal server error!' };
+      }
+    };
+
+    getData();
+  </script>
 </body>
+
 </html>

@@ -33,7 +33,7 @@ const Customer = new mongoose.Schema({
         type: Number,
         require: true,
     },
-    pointRevenue: {
+    pointNumberOfProduct: {
         type: Number,
         require: true,
     },
@@ -72,10 +72,12 @@ const Customer = new mongoose.Schema({
     typeColorLot: {
         type: String,
         require: true,
+        default: '#f1f1f1'
     },
     UserID: {
         type: String,
         require: true,
+        default: ''
     }
 });
 

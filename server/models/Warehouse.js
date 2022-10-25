@@ -1,8 +1,12 @@
 const mongoose = require('mongoose');
 
-const MapsWarehouse = new mongoose.Schema({
+const Warehouse = new mongoose.Schema({
     nameWarehouse: {
         type: String,
+        require: true,
+    },
+    totalArea: {
+        type: Number,
         require: true,
     },
     companyUnit: {
@@ -13,6 +17,6 @@ const MapsWarehouse = new mongoose.Schema({
         type: String,
         require: true,
     }
-});
+})
 
-module.exports = mongoose.model("MapsWarehouse", MapsWarehouse)
+module.exports = mongoose.model("Warehouse", Warehouse);

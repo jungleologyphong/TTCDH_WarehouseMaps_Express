@@ -1,18 +1,16 @@
 const mongoose = require('mongoose');
 
-const MapsWarehouse = new mongoose.Schema({
-    nameWarehouse: {
+const Todo = new mongoose.Schema({
+    titleTodo: {
         type: String,
         require: true,
     },
-    companyUnit: {
+    statusTodo: {
         type: String,
         require: true,
     },
-    pathImage: {
+    UserID: {
         type: String,
         require: true,
     }
-});
-
-module.exports = mongoose.model("MapsWarehouse", MapsWarehouse)
+})
