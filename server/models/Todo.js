@@ -14,3 +14,5 @@ const Todo = new mongoose.Schema({
         require: true,
     }
 })
+
+module.exports = mongoose.model("Todo", Todo)
