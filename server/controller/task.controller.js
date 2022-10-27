@@ -4,21 +4,20 @@ exports.create = (req, res) => {
     //Create a Task
     const task = new Task({
         titleTask: req.body.titleTask,
-        statusTask: req.body.statusTask,
         UserID: req.body.UserID
     });
 
     //Save Task in the database
     task
-    .save(task)
-    .then((data) => {
-        res.send(data);
-    })
-    .catch((err) => {
-        res.status(500).send({
-            Message: err.message
+        .save(task)
+        .then((data) => {
+            res.send(data);
+        })
+        .catch((err) => {
+            res.status(500).send({
+                Message: err.message
+            });
         });
-    });
 };
 
 exports.getAllTask = async (req, res) => {

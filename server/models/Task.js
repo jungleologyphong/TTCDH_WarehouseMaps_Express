@@ -8,6 +8,7 @@ const Task = new mongoose.Schema({
     statusTask: {
         type: String,
         require: true,
+        default: true,
     },
     UserID: {
         type: String,

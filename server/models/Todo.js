@@ -8,6 +8,7 @@ const Todo = new mongoose.Schema({
     statusTodo: {
         type: String,
         require: true,
+        default: true,
     },
     UserID: {
         type: String,

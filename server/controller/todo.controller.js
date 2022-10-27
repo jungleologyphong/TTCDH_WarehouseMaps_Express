@@ -10,25 +10,25 @@ exports.create = (req, res) => {
 
     //Save Todo in the database
     todo
-    .save(todo)
-    .then((data) => {
-        res.send(data);
-    })
-    .catch((err) => {
-        res.status(500).send({
-            Message: err.Message
+        .save(todo)
+        .then((data) => {
+            res.send(data);
+        })
+        .catch((err) => {
+            res.status(500).send({
+                Message: err.Message
+            });
         });
-    });
 };
 
 exports.getAllTodo = async (req, res) => {
     try {
         const TodoList = await Todo.find({})
-        
+
         return res.json(TodoList);
     } catch (error) {
         console.error('error', error.Message);
 
-        res.status(404).json({ Message_API_GetTodo: "ERROR_INTERNAL_SERVER_ERROR"})
+        res.status(404).json({ Message_API_GetTodo: "ERROR_INTERNAL_SERVER_ERROR" })
     }
 }

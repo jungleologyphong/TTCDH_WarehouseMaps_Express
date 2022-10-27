@@ -73,9 +73,9 @@ const pointBreachContract = (breachOfContract) => {
 const typeCustomer = (pointRevenue, pointPaymentSchedule, pointContractTerm, pointBreachContract, pointNumberOfProduct) => {
     //Type Customer
     var totalPoint = pointRevenue + pointPaymentSchedule + pointContractTerm + pointBreachContract + pointNumberOfProduct;
-    if((totalPoint >= 60 && totalPoint < 79)){
+    if ((totalPoint >= 60 && totalPoint < 79)) {
         return typeCustomer = "Bạc";
-    } else if(totalPoint >= 80 && totalPoint < 99){
+    } else if (totalPoint >= 80 && totalPoint < 99) {
         return typeCustomer = "Vàng";
     } else {
         return typeCustomer = "Kim Cương";

@@ -38,7 +38,7 @@ exports.getAllUser = async (req, res) => {
 
 exports.signIn = async (req, res) => {
   try {
-    const {email, password } = req.body
+    const { email, password } = req.body
 
     console.log("Email: " + email + " & " + "Password: " + password);
 
