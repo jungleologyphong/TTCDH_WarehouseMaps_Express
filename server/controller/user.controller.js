@@ -27,7 +27,7 @@ exports.create = (req, res) => {
 exports.getAllUser = async (req, res) => {
   try {
     const UserList = await Users.find({});
-
+    console.log(UserList);
     return res.json(UserList);
   } catch (error) {
     console.error('error', error.message);
@@ -38,6 +38,7 @@ exports.getAllUser = async (req, res) => {
 
 exports.signIn = async (req, res) => {
   try {
+    console.log("POST RUNNING");
     const { email, password } = req.body
 
     console.log("Email: " + email + " & " + "Password: " + password);
@@ -46,16 +47,18 @@ exports.signIn = async (req, res) => {
       return res.status(404).json({ Message_API_SignIn: "ERROR_MISSING_PARAMS" });
     }
     Users.findOne({ email: email, password: password }).exec((error, doc) => {
-      if (error) return res.status(404).json({ message: error.message });
+      if (error){
+        return res.status(404).json({ message: error.message });
+      } 
 
-      if (!doc) return res.status(404).json({ Message_API_SignIn: "ERROR_NOT_FOUND" });
+      if (!doc){
+        return res.status(404).json({ Message_API_SignIn: "ERROR_NOT_FOUND" });
+      } 
 
-      res.redirect('/dashboard');
+      res.redirect('dashboard');
     });
   } catch (error) {
     console.error('error', error.message);
     res.status(404).json({ Message_API_SignIn: "ERROR_INTERNAL_SERVER_ERROR" });
   }
 }
-
-

@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="/css/vertical-layout-light/style.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="/images/logodh_mauxanh_cokhung.png" />
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
@@ -27,9 +28,10 @@
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo mr-5" href="/dashboard"><img src="/images/logo Dang Huynh - mau xanh.png" class="mr-2"
+        <a class="navbar-brand brand-logo mr-5" href="/dashboard"><img src="/images/logo Dang Huynh - mau xanh.png"
+            class="mr-2" alt="logo" /></a>
+        <a class="navbar-brand brand-logo-mini" href="/dashboard"><img src="/images/logo Dang Huynh - mau xanh.png"
             alt="logo" /></a>
-        <a class="navbar-brand brand-logo-mini" href="/dashboard"><img src="/images/logo Dang Huynh - mau xanh.png" alt="logo" /></a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -151,10 +153,10 @@
           <div class="tab-pane fade show active scroll-wrapper" id="todo-section" role="tabpanel"
             aria-labelledby="todo-section">
             <div class="add-items d-flex px-3 mb-0">
-              <form class="form w-100" method="post" action="/createTodo">
+              <form class="form w-100 form-default" method="post" action="/createTodo" id="createTodo">
                 <div class="form-group d-flex">
-                  <input type="text" class="form-control todo-list-input" placeholder="Thêm công việc">
-                  <button type="submit" class="add btn btn-primary todo-list-add-btn" id="add-task">Thêm</button>
+                  <input type="text" class="form-control todo-list-input" id="titleTodo" placeholder="Thêm công việc">
+                  <button type="submit" class="add btn btn-primary todo-list-add-btn">Thêm</button>
                 </div>
               </form>
             </div>
@@ -163,44 +165,7 @@
                 <li>
                   <div class="form-check">
                     <label class="form-check-label">
-                      <input class="checkbox" type="checkbox">
-                      Example 1
-                    </label>
-                  </div>
-                  <i class="remove ti-close"></i>
-                </li>
-                <li>
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input class="checkbox" type="checkbox">
-                      Example 2
-                    </label>
-                  </div>
-                  <i class="remove ti-close"></i>
-                </li>
-                <li>
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input class="checkbox" type="checkbox">
-                      Example 3
-                    </label>
-                  </div>
-                  <i class="remove ti-close"></i>
-                </li>
-                <li class="completed">
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input class="checkbox" type="checkbox" checked>
-                      Example 4
-                    </label>
-                  </div>
-                  <i class="remove ti-close"></i>
-                </li>
-                <li class="completed">
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input class="checkbox" type="checkbox" checked>
-                      Example 5
+                      <input class="checkbox" type="checkbox"> Example_Todo_1
                     </label>
                   </div>
                   <i class="remove ti-close"></i>

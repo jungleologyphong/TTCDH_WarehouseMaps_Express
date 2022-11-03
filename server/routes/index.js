@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var userController = require('../controller/user.controller');
-
-/* GET home page. */
+/* GET IndexPage. */
 router.get('/', function (req, res, next) {
     res.render('index', { title: 'Đăng nhập' });
 });

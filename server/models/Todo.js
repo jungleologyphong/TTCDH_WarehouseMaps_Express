@@ -13,6 +13,7 @@ const Todo = new mongoose.Schema({
     UserID: {
         type: String,
         require: true,
+        default: "UID0000000000"
     }
 })
 

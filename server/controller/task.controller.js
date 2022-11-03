@@ -1,6 +1,6 @@
 const Task = require("../models/Task");
 
-exports.create = (req, res) => {
+exports.createTask = (req, res) => {
     //Create a Task
     const task = new Task({
         titleTask: req.body.titleTask,
